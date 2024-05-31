@@ -36,6 +36,19 @@ jobs:
       # This line is needed for nx affected to work when CI is running on a PR
       - run: git branch --track main origin/main
         if: ${{ github.event_name == 'pull_request' }}
+      #---------------------------------------
+      - name: Cypress install
+        uses: cypress-io/github-action@v6
+        with:
+          # Disable running of tests within install job
+          runTests: false
+          build: pnpm nx run-many -t build
 
-      - run: pnpm nx affected -t lint test build --parallel=3
+      - name: Save build folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          if-no-files-found: error
+          path: build
+      #----------------------------------------
       - run: pnpm nx run-many -t e2e --parallel=1
