@@ -66,7 +66,6 @@ jobs:
         with:
           name: build
           path: build
-      - run: ls dist/apps/cart
       - run: ls
       - run: ls build
       - name: Cypress run
