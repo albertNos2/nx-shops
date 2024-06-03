@@ -44,12 +44,12 @@ jobs:
           runTests: false
           build: pnpm nx run-many -t build
 
-      # - name: Save build folder
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: build
-      #     if-no-files-found: error
-      #     path: dist/apps/cart
+      - name: Save build folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          if-no-files-found: error
+          path: dist/apps/cart
       #----------------------------------------
   cypress-run:
     runs-on: ubuntu-22.04
@@ -61,11 +61,11 @@ jobs:
         with:
           version: 8
 
-      # - name: Download the build folder
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: build
-      #     path: build
+      - name: Download the build folder
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: build
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
