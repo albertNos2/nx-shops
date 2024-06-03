@@ -49,6 +49,7 @@ jobs:
         with:
           name: build
           if-no-files-found: error
-          path: build
+          path: dist/apps/cart
       #----------------------------------------
-      - run: pnpm nx run-many -t e2e --parallel=1
+      - run: ls dist/apps/cart
+      - run: pnpm nx e2e cart
