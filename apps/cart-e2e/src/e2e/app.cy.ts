@@ -3,7 +3,7 @@ import { getHeader } from '@nx-shops/shared/ze2e-utils';
 import { getPage } from '../support/app.po';
 
 describe('cart', () => {
-  before(() => cy.visit('/'));
+  beforeEach(() => cy.visit('/'));
 
   it('should display the header', () => {
     getHeader().should('exist');
