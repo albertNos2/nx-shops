@@ -1,7 +1,7 @@
 import { getPage } from '../support/app.po';
 
 describe('cart', () => {
-  before(() => cy.visit('/'));
+  beforeEach(() => cy.visit('/'));
 
   it('should display the header', () => {
     cy.contains('Nx Store');
