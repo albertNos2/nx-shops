@@ -1,12 +1,10 @@
-import { getHeader } from '@nx-shops/shared/ze2e-utils';
-
 import { getPage } from '../support/app.po';
 
 describe('cart', () => {
   beforeEach(() => cy.visit('/'));
 
   it('should display the header', () => {
-    getHeader().should('exist');
+    cy.contains('Nx Store');
   });
 
   it('should display products', () => {
