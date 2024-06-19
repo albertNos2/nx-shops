@@ -2,34 +2,70 @@ name: CI
 on:
   push:
     branches:
-      # Change this if your primary branch is not mainn
       - main
   pull_request:
 
 jobs:
   main:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      # Setup pnpm
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      - name: Restore cached npm dependencies
-        uses: actions/cache/restore@v3
-        with:
-          path: |
-            node_modules
-            ~/.cache/Cypress # needed for the Cypress binary
-          key: npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
+      # - name: Restore cached npm dependencies
+      #   id: cache-dependencies-restore
+      #   uses: actions/cache/restore@v3
+      #   with:
+      #     path: |
+      #       node_modules
+      #       ~/.cache/Cypress # needed for the Cypress binary
+      #     key: npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
       - run: pnpm install --frozen-lockfile
-      - name: Cache npm dependencies
-        uses: actions/cache/save@v3
-        with:
-          path: |
-            node_modules
-            ~/.cache/Cypress # needed for the Cypress binary
-          key: npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
-      - run: pnpm nx build cart
+      # - name: Cache npm dependencies
+      #   id: cache-dependencies-save
+      #   uses: actions/cache/save@v3
+      #   with:
+      #     path: |
+      #       node_modules
+      #       ~/.cache/Cypress # needed for the Cypress binary
+      #     key: ${{ steps.cache-dependencies-restore.outputs.cache-primary-key }}
+      # - uses: nrwl/nx-set-shas@v3
+      # # This line is needed for nx affected to work when CI is running on a PR
+      # - run: git branch --track main origin/main
+      #   if: ${{ github.event_name == 'pull_request' }}
+      #---------------------------------------
+      - run: pnpm nx run-many -t build
+
+      #     - name: Save build folder
+      #       uses: actions/upload-artifact@v4
+      #       with:
+      #         name: build
+      #         if-no-files-found: error
+      #         path: dist/apps/cart
+      #     #----------------------------------------
+      # cypress-run:
+      #   runs-on: ubuntu-22.04
+      #   needs: main
+      #   steps:
+      #     - name: Checkout
+      #       uses: actions/checkout@v4
+      #     - uses: pnpm/action-setup@v2
+      #       with:
+      #         version: 8
+
+      #     - name: Download the build folder
+      #       uses: actions/download-artifact@v4
+      #       with:
+      #         name: build
+      #         path: build
+      - run: pnpm run e2e-ci
+      # - run: ls
+      # - run: ls build
+      # - name: Cypress run
+      #   uses: cypress-io/github-action@v6
+      #   with:
+      #     start: pnpm nx serve cart
+      #     browser: chrome

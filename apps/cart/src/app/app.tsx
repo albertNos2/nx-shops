@@ -7,6 +7,7 @@ import { CartCartPage } from '@nx-shops/cart/cart-page';
 export const App = () => {
   return (
     <>
+    <div>Yo</div>
       <nx-shops-header />
       <Routes>
         <Route path="/" element={<CartCartPage />} />

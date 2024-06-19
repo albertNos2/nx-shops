@@ -13,7 +13,12 @@
     "format:check": "nx format:check",
     "graph": "nx graph",
     "help": "nx help",
-    "nx": "nx"
+    "nx": "nx",
+    "be": "node yo/yo",
+    "fe": "nx serve cart",
+    "run-cypress": "cypress run",
+    "e2e-ci": "start-server-and-test be localhost:3000/yo fe localhost:4200/product/4 run-cypress",
+    "e2e-ci-b": "start-server-and-test be localhost:3000/yo fe"
   },
   "private": true,
   "packageManager": "pnpm@8.9.2",
@@ -30,6 +35,7 @@
     "react-router-dom": "6.11.2",
     "react-test-renderer": "18.2.0",
     "rxjs": "7.8.0",
+    "start-server-and-test": "^2.0.4",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
