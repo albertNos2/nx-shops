@@ -39,28 +39,28 @@ jobs:
       #---------------------------------------
       - run: pnpm nx run-many -t build
 
-      - name: Save build folder
-        uses: actions/upload-artifact@v4
-        with:
-          name: build
-          if-no-files-found: error
-          path: dist/apps/cart
-      #----------------------------------------
-  cypress-run:
-    runs-on: ubuntu-22.04
-    needs: main
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
+      #     - name: Save build folder
+      #       uses: actions/upload-artifact@v4
+      #       with:
+      #         name: build
+      #         if-no-files-found: error
+      #         path: dist/apps/cart
+      #     #----------------------------------------
+      # cypress-run:
+      #   runs-on: ubuntu-22.04
+      #   needs: main
+      #   steps:
+      #     - name: Checkout
+      #       uses: actions/checkout@v4
+      #     - uses: pnpm/action-setup@v2
+      #       with:
+      #         version: 8
 
-      - name: Download the build folder
-        uses: actions/download-artifact@v4
-        with:
-          name: build
-          path: build
+      #     - name: Download the build folder
+      #       uses: actions/download-artifact@v4
+      #       with:
+      #         name: build
+      #         path: build
       - run: pnpm run e2e-ci
       # - run: ls
       # - run: ls build
